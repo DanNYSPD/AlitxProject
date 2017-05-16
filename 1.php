@@ -251,7 +251,7 @@ $letras = array("A","B","C","D");
         <!-- fin contenedor --></center>
 			</FORM>
 <button id="btnEnviar" onclick="enviarRespuesta()">qasa</button>
- <button onclick="myFunction()">Click me</button> 
+ 
 			<script type="text/javascript">
 				
 				function enviarRespuesta() {

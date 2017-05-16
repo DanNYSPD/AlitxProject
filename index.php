@@ -5,7 +5,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.css" rel="stylesheet">
 <link href="css/estilos.css" rel="stylesheet" type="text/css" media="screen" />
-<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery-3.2.js"></script>
 <script src="js/bootstrap.min.js"></script>	
 </head>
 <body>
@@ -36,9 +36,9 @@
 </div>
 <div class="row">
 <a href="nuevo.php" class="btn btn-primary"> Nuevo Registro</a><br> <br>
-<form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="GET">
 <b><font size="4"color="black">Grupo: </b>
-<select name=grupo>
+<select id="grupo" name=grupo>
 <?php 
 	require_once('php/Maestro.php');
 	$maestro = new Maestro();
@@ -62,12 +62,42 @@
 <option> 3 </option>
 -->
 </select>
-<!--<input type="text" id="grupo" name="grupo" value='0' /> -->
-
-<input type="submit" id="enviar" name="enviar" value="Buscar" onclick="consultarGrupo()" class="btn btn-info" />
-
+<!-- <input type="text" id="grupo" name="grupo" value='0' /> 
+-->
+<input type="submit"   id="enviar" class="btn btn-info" />
+<!--<button  id="enviar" onclick="consultarGrupo()" class="btn btn-info" >Buscar</button>
+-->
 
 </form>
+
+<script type="text/javascript">
+		
+		function consultarGrupo() {
+			console.log("a");
+			//obtenemos el item seleccionado
+			var selected=$("#grupo option:selected");
+			var grupo=selected.text();
+			if(grupo!==""){
+				consultarGrupo2(grupo);
+			}
+			
+		}
+		function consultarGrupo2(grupo){
+			console.log("Se consylra grupo "+grupo);
+		var url="index.php"; //se envia a si mismo
+					$.ajax({
+				           type: "GET",
+				           url: url,
+				           data: {'grupo':grupo},//$("#idForm").serialize(), // serializes the form's elements.
+				           success: function(data)
+				           {
+				               //alert(data); // show response from the php script.
+				               console.log(data);
+				           }
+				         });	
+		}
+	</script>
+
 </div>
 <br>
 <div class="row table-responsive">
@@ -104,14 +134,15 @@ $TAG=basename(__FILE__, '.php');
 $valor = $_GET['grupo'];
 if(!empty($valor)){
 	
-	$sql=getSql($valor);
-	$i=getGrupo($valor);
+	//$sql=getSql($valor);
+	//$i=getGrupo($valor);
 	$conexion=conectarBD();
 	if($conexion){	
 	
-	$primero=consultarPrimero($sql,$conexion);
+//	$primero=consultarPrimero($sql,$conexion);
 	echo $br."asdadada";
-	$grupo=$primero[$i];
+	//$grupo=$primero[$i];
+	$grupo=$valor;
 	//sql para consultar a los alumnos del grupo
 	$sql =  "SELECT * FROM alumno where grupo='".$grupo."'";
 
@@ -161,11 +192,6 @@ if(!empty($valor)){
 			 
 	
 <a href="menuma.html" title><img align="left" src="img/volver.png" width=100 height=90 border="0"></a>
-	<script>
-		
-		function consultarGrupo() {
-			
-		}
-	</script>
+	
 	</body>
 </html>
