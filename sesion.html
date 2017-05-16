@@ -1,0 +1,62 @@
+<?php
+required_once("./php/myDBC.php");
+if(isset($_SESSION['session']))
+{
+    header("location:principal.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Iniciar Sesi&oacute;n</title>
+    <meta charset="utf-8">
+	
+	<script type="text/javascript" src="./../js/jquery-1.10.2.min.js" ></script>
+    <script type="text/javascript" src="./../js/validar.js" ></script>
+ <link type="text/css" href="./css/style.css" rel="stylesheet" />
+</head>
+ 
+<body>
+ 
+ 
+    <div id="envoltura">
+        <div id="contenedor">
+	
+		<center> <b> <font face="Century Gothic" size="4" >INICIAR SESI&Oacute;N</a> <b> </font>
+ 
+            
+            <div id="cabecera" >
+			
+               
+            </div>
+ 
+            <div id="cuerpo">
+			 <center><img src="./img/u.png"></center><br> <br>
+            <center>    <form id="form-login" action="" method="post" autocomplete="off">
+                    
+                    <p><label ><font face="Century Gothic" color="black">Usuario:</label></p></font>
+                        <input name="usuario" type="text" id="usuario" placeholder="Ingresa Usuario" autofocus="" required=""></p>
+ 
+                    <p><label><font face="Century Gothic" color="black">Contrase&ntilde;a:</label></p></font>
+                        <input name="contrasenia" type="password" id="contrasenia" placeholder="Ingresa Password" required=""></p>
+ 
+                    <p id="bot"><input type="submit" id="submit" name="submit" value="Ingresar" class="boton"></p><br>
+					
+
+                </form> </center>
+				<a href="index.html" title=""><img src="img/inicio.jpg" border="0"></a>
+
+				
+				
+            </div>
+ 
+          
+			<div id="pie">Plataforma Teoria de Conjuntos</div>
+</form>
+</div>
+        </div><!-- fin contenedor -->
+    </div><!--fin envoltura-->
+</body>
+ 
+</html> 

@@ -1,0 +1,17 @@
+select   
+alumnos.noControl, 
+user.nombre,
+ user.apellidos,
+ user.email,
+ alumnos.grupo, 
+ user.last_session
+from  j2ee.user inner join j2ee.alumnos on noControl=nusuario
+where 
+grupo    
+IN 
+   ( 
+	select grupo1 from maestros
+	where usuario='maestro'
+	);
+
+	

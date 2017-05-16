@@ -1,0 +1,6 @@
+CREAR php que reciba el las respuestas del exmaen, compare con los resultados, y devuelva la calificacion y registre el numero de intentos
+
+name (nombre de vairble), value=valor
+name (nombre/numero de pregunta en la bd) ,valor =opcion de respuesta en la bd (no del html que es aleatorio)
+
+<input type="radio" name="p5" value="opA">

@@ -1,0 +1,37 @@
+<?php
+class conexion{
+ public $enlace;
+
+ function __construct(){
+ $this->enlace=mysql_connect(localhost,root,);
+ mysql_select_db(mdu2, $this->enlace);
+}
+
+function __destruct(){
+ mysql_close($this->enlace);
+} }
+
+
+
+<?php
+
+$nombres=$_POST['nombres'];
+$nocontrol=$_POST['nocontrol'];
+$semestre=$_POST['semestre'];
+$carrera=$_POST['carrera'];
+$grupo=$_POST['grupo'];
+$email=$_POST['email'];
+$usuario=$_POST['usuario'];
+$pass=$_POST['pass'];
+
+{
+	$EnlaceBD= mysql_connect(localhost,root, ) or die ("No se conecto a la BD");
+	mysql_select_db(u2cr,$EnlaceBD) or die ("No se puede seleccionar la BD");
+	
+	mysql_query("INSERT INTO alumno VALUES ('$nombres','$nocontrol','$semestre','$carrera','$grupo','$email','$pass'"));&&
+	mysql_query("INSERT INTO maestro VALUES"('$nombres','$usuario','$email','$pass'));
+	 echo "Datos guardados correctamente";
+} else {
+	echo "Error al guardar los datos";
+}
+?>
