@@ -1,4 +1,15 @@
-
+<?php 
+/*
+	require_once("php/validarSession.php");
+	$usuario="";
+	if(!esMaestro()){
+	//	echo "No eres maestro";
+		header("Location:php/error.php"."?"."msjError=NO TIENE PERMISO DE MAESTRO");
+	}else{
+		$usuario=getUsuarioMaestro();
+	}
+*/
+ ?>
 <html lang="es">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +63,7 @@
 	}
 	
 	$maestro = new Maestro();
-	$usuario="ian09";
+	$usuario=($usuario!="")?$usuario:"ian09"; //
 
 	$arrGrupos=null;
 	$arrGrupos=$maestro->consultarGrupos($usuario);

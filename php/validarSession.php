@@ -28,6 +28,9 @@
 		}
 		return false;
 	}
+	function getUsuarioMaestro(){
+		return $_SESSION[CL_USUARIO];
+	}
 	function esAlumno(){
 		if(estaLogeado()){
 			if(isset($_SESSION[CL_NIVEL])){
