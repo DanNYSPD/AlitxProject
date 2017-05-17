@@ -29,7 +29,7 @@ function consultar($sql,$mysqli){
 	if($mysqli->connect_errno){
 		imprimirError($mysqli);
 		throw new Exception("AcessoBD->realizarConsulta:Falta conexion a la BD");
-		return -1;
+		//return -1;
 	}
 	//retorna un resultado en ok, si fallo retorna el query retorna false;
 	//Retorna FALSE en caso de error. Si una consulta del tipo SELECT, SHOW, DESCRIBE o EXPLAIN es exitosa, mysqli_query() retornará un objeto mysqli_result.
@@ -56,7 +56,7 @@ function consultar($sql,$mysqli){
     // actor_id demasiado grande? 
     	echo "Lo sentimos. No se pudo encontrar una coincidencia .Inténtelo de nuevo.";
     	echo "<br>-".$sql."-"."<br>";
-    	return 0;
+    	return false;
 	}
 	
 	return $resultado;
@@ -112,6 +112,11 @@ function consultar($sql,$mysqli){
 			}
 		}
 		return $arrRes;
+	}
+	function consultarAssocD($sql)
+	{
+		$conexion=conectarBD();
+		return consultarAssoc($sql,$conexion);
 	}	
 	/**
 	 * @param  [type]

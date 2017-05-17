@@ -1,17 +1,15 @@
-CREATE DATABASE u2cr1
-use u2cr1
+-- CREATE DATABASE u2cr1
+-- use u2cr1
 
 -- create tables--
-CREATE TABLE Alumno (nombres varchar(75), nocontrol int(8) NOT NULL AUTO_INCREMENT, carrera varchar(10), semestre int(2), grupo varchar(5), email varchar(30), pass varchar(15), PRIMARY KEY (nocontrol));
+CREATE TABLE Alumno (nombres varchar(75), nocontrol int(8) NOT NULL AUTO_INCREMENT, carrera varchar(40), semestre int(2), grupo varchar(5), email varchar(30), pass varchar(15), PRIMARY KEY (nocontrol));
 CREATE TABLE Alumno_Examen (`idAlumno-Examen` int(10) NOT NULL AUTO_INCREMENT, ExamenidExamen int(10) NOT NULL, Alumnonocontrol int(8) NOT NULL, intentos int(10), promedio double, PRIMARY KEY (`idAlumno-Examen`));
 CREATE TABLE Examen (idExamen int(10) NOT NULL AUTO_INCREMENT, descripcion varchar(50), `Column` int(10), PRIMARY KEY (idExamen));
 CREATE TABLE Examen_pregunta (idExamen int(10) NOT NULL, idPregunta int(10) NOT NULL, version int(10), `idExamen-pregunta` int(10) NOT NULL AUTO_INCREMENT, PRIMARY KEY (`idExamen-pregunta`));
 CREATE TABLE Maestro (nombres varchar(75), usuario varchar(10) NOT NULL, email varchar(15), grupo1 varchar(5), grupo2 varchar(5), grupo3 varchar(5), pass varchar(15), PRIMARY KEY (usuario));
-CREATE TABLE Pregunta (idPregunta int(10) NOT NULL AUTO_INCREMENT, descripcion varchar(60), opcion1 varchar(10), opcion2 varchar(10), opcion3 varchar(10), respuesta varchar(10), opcion4 varchar(10), idRespuesta int(10) NOT NULL, PRIMARY KEY (idPregunta));
-CREATE TABLE Respuestas (idRespuesta int(10) NOT NULL AUTO_INCREMENT, respuesta char(10), PRIMARY KEY (idRespuesta));
+CREATE TABLE Pregunta (idPregunta int(10) NOT NULL AUTO_INCREMENT, descripcion varchar(60), opcion1 varchar(10), opcion2 varchar(10), opcion3 varchar(10), respuesta varchar(10), opcion4 varchar(10), PRIMARY KEY (idPregunta));
 ALTER TABLE Examen_pregunta ADD INDEX FKExamen_pre85378 (idExamen), ADD CONSTRAINT FKExamen_pre85378 FOREIGN KEY (idExamen) REFERENCES Examen (idExamen);
 ALTER TABLE Examen_pregunta ADD INDEX FKExamen_pre390502 (idPregunta), ADD CONSTRAINT FKExamen_pre390502 FOREIGN KEY (idPregunta) REFERENCES Pregunta (idPregunta);
-ALTER TABLE Pregunta ADD INDEX FKPregunta828419 (idRespuesta), ADD CONSTRAINT FKPregunta828419 FOREIGN KEY (idRespuesta) REFERENCES Respuestas (idRespuesta);
 ALTER TABLE Alumno_Examen ADD INDEX FKAlumno_Exa928484 (ExamenidExamen), ADD CONSTRAINT FKAlumno_Exa928484 FOREIGN KEY (ExamenidExamen) REFERENCES Examen (idExamen);
 ALTER TABLE Alumno_Examen ADD INDEX FKAlumno_Exa729190 (Alumnonocontrol), ADD CONSTRAINT FKAlumno_Exa729190 FOREIGN KEY (Alumnonocontrol) REFERENCES Alumno (nocontrol);
 
@@ -37,14 +35,15 @@ select grupo1,grupo2,grupo3 from maestro where usuario="hec09";
 SELECT * FROM alumno where grupo='6ab';
 -- consulta de un examen y preguntas por su id
 SELECT * FROM Examen_pregunta WHERE idExamen=1;
-
+select P.idPregunta,opcion1,opcion2,opcion3,respuesta from Pregunta as P, Examen_pregunta as ExPrg where P.idPregunta=ExPrg.idPregunta;
+-- consylta versiones de examen
+select version from Examen_pregunta where idExamen=1;
 
 -- drop
 
 
 ALTER TABLE Examen_pregunta DROP FOREIGN KEY FKExamen_pre85378;
 ALTER TABLE Examen_pregunta DROP FOREIGN KEY FKExamen_pre390502;
-ALTER TABLE Pregunta DROP FOREIGN KEY FKPregunta828419;
 ALTER TABLE Alumno_Examen DROP FOREIGN KEY FKAlumno_Exa928484;
 ALTER TABLE Alumno_Examen DROP FOREIGN KEY FKAlumno_Exa729190;
 DROP TABLE IF EXISTS Alumno;
@@ -53,4 +52,3 @@ DROP TABLE IF EXISTS Examen;
 DROP TABLE IF EXISTS Examen_pregunta;
 DROP TABLE IF EXISTS Maestro;
 DROP TABLE IF EXISTS Pregunta;
-DROP TABLE IF EXISTS Respuestas;
