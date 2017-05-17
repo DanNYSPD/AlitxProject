@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+<!--
 <link href="css/bootstrap-theme.css" rel="stylesheet">
+-->
 <link href="css/estilos.css" rel="stylesheet" type="text/css" media="screen" />
 <script src="js/jquery-3.2.js"></script>
 <script src="js/bootstrap.min.js"></script>	
@@ -41,6 +43,14 @@
 <select id="grupo" name=grupo>
 <?php 
 	require_once('php/Maestro.php');
+
+	if(isset($_GET['grupo'])){
+		//die("no se recivio atributo grupo");
+		$valor = $_GET['grupo'];
+	}else{
+		$valor = "";	
+	}
+	
 	$maestro = new Maestro();
 	$usuario="ian09";
 
@@ -48,10 +58,14 @@
 	$arrGrupos=$maestro->consultarGrupos($usuario);
 
 	if(!$arrGrupos==null){
+		$select1=($arrGrupos["grupo1"]==$valor)?"selected":"";
+		$select2=($arrGrupos["grupo2"]==$valor)?"selected":"";
+		$select3=($arrGrupos["grupo3"]==$valor)?"selected":"";
 		var_dump($arrGrupos);
-		echo "<option >".$arrGrupos["grupo1"]."</option>";
-		echo "<option>".$arrGrupos["grupo2"]."</option>";
-		echo "<option>".$arrGrupos["grupo3"]."</option>";	
+
+		echo "<option ".$select1.">".$arrGrupos["grupo1"]."</option>";
+		echo "<option ".$select2.">".$arrGrupos["grupo2"]."</option>";
+		echo "<option ".$select3.">".$arrGrupos["grupo3"]."</option>";	
 	}
 	echo "sads>";
 	
@@ -99,6 +113,7 @@
 	</script>
 
 </div>
+
 <br>
 <div class="row table-responsive">
 <table class="table table-striped">
@@ -120,9 +135,11 @@
 require_once 'php/conexionMysqli.php';
 require_once 'php/indexBussines.php';
 //debeemos siempre que recibimos por post o get verificar que se recibio dicha variable
+/*
 if(!isset($_GET['grupo'])){
 	die("no se recivio atributo grupo");
 }
+*/
 
 $i="";
 $br="</br>";
@@ -130,8 +147,7 @@ $br="</br>";
 $TAG=basename(__FILE__, '.php');
 //echo $TAG;
 //end
-	
-$valor = $_GET['grupo'];
+
 if(!empty($valor)){
 	
 	//$sql=getSql($valor);
@@ -140,7 +156,7 @@ if(!empty($valor)){
 	if($conexion){	
 	
 //	$primero=consultarPrimero($sql,$conexion);
-	echo $br."asdadada";
+	
 	//$grupo=$primero[$i];
 	$grupo=$valor;
 	//sql para consultar a los alumnos del grupo
@@ -148,7 +164,8 @@ if(!empty($valor)){
 
 	$arrRes2=consultarAssoc($sql,$conexion);
 	if(!$arrRes2){
-		die("no se obtuvo resultado");
+
+		die('<div class="alert alert-info" role="alert">no se obtuvo resultado</div>');
 	}
 	//echo $br."--";
 	//var_dump($arrRes2);
@@ -179,7 +196,8 @@ if(!empty($valor)){
 		}// while fin
 	}
 }else{
-		echo "else emty";
+		echo '<div class="alert alert-info" role="alert">selecciona un grupo</div>';
+
 }
 
 ?>
@@ -187,10 +205,11 @@ if(!empty($valor)){
 			</table>
 			</div>
 		</div>
+
 		
 			<center> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
 			 
-	
+		
 <a href="menuma.html" title><img align="left" src="img/volver.png" width=100 height=90 border="0"></a>
 	
 	</body>
