@@ -1,4 +1,25 @@
-<?php 
+<?php
+require_once("ExamenService.php");
+require_once("Response.php");
+	if(isset($_POST['operacion'])){
+		$operacion=$_POST['operacion'];
+		switch ($operacion) {
+			case 'obtenerExamen':
+				if(!isset($_POST['idExamen'])){
+					die("No se recibio atributo: 'idExamen'");
+				}else{
+					$idExamen=$_POST['idExamen'];
+					obtenerExamen($idExamen);
+					die();
+				}
+
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+	} 
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		die("Error metodo no soportado");
 	}
@@ -8,7 +29,7 @@
 	if(!isset($_POST['idExamen'])){
 		die("No se recibio atributo: 'idExamen'");
 	}
-
+	
 	$arr=$_POST['respuestas'];
 	$idExamen=$_POST['idExamen'];
 	//asi vemos que variable enviamos
@@ -43,6 +64,30 @@
 			$arrModelado[$key]= array('idPregunta' =>$value["name"] ,'respuesta'=>$value["value"]);
 			
 		}
+	}
+	function obtenerExamen($id)
+	{
+		//ob_end_clean();
+		ob_end_clean();
+		$idI=intval($id);
+		$examen= new ExamenService();
+		$objExamenEntidad=$examen->obtenerExamen($idI);	
+		//	var_dump($arrExamen);
+		if($objExamenEntidad){
+			if($objExamenEntidad->arrPreguntas){
+				$arrPreguntas=$objExamenEntidad->arrPreguntas;
+				if(count($arrPreguntas)>=10){
+					echo json_encode(new Response($objExamenEntidad,200,"ok"));
+					return;
+				}else{
+					echo json_encode(new Response(null,404,"error en el numero de preguntas"));
+					return;
+				}
+			}
+		}
+		echo json_encode(new Response(null,404,"error No se encontro"));
+		return;
+
 	}
 
  ?>

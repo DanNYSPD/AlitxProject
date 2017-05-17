@@ -88,15 +88,13 @@ function consultar($sql,$mysqli){
 		}
 		return $arrRes;
 	}
-	
+
 	/**obtiene el resultado en forma de un array numerico(indice numerico) (numero-valor), donde cada fila(row) es un array asociativo (clave-valor)
 	 * @param  [type]
 	 * @param  [mysqli object]
 	 * @return [Arreglo numerico con filas en forma de arreglo asociadtivo]
 	 */
 	function consultarAssoc($sql,$mysqli){
-		$x=0;
-  		$y=0;
 		$arrRes=null;
 		$sContenido="";
 
@@ -108,15 +106,43 @@ function consultar($sql,$mysqli){
 		      //	var_dump($arFila);
 		      //	echo "<br>";
 			     $arrRes[]=$arFila;
-		      }			
+		      }
+		      echo "$sql";
+		      echo json_encode($arrRes);			
+		      echo "<br>fin json encone<br>";
 			}
 		}
+
 		return $arrRes;
 	}
+	function consultarAssocBeta($sql,$mysqli){
+		$arrRes=null;
+		$sContenido="";
+
+		$resultado=consultar($sql,$mysqli);
+		if($resultado){
+			if($resultado){
+				
+		     $arrRes=$resultado->fetch_all(MYSQLI_ASSOC);
+		      
+		    /*  
+		      echo "$sql";
+		      echo "<br>inicio json encone<br>";
+		      echo json_encode($arrRes);			
+		      echo "<br>fin json encone<br>";
+		      */
+			}
+		}
+
+		return $arrRes;
+	}
+	
+	
 	function consultarAssocD($sql)
 	{
 		$conexion=conectarBD();
-		return consultarAssoc($sql,$conexion);
+		mysqli_set_charset($conexion, 'utf8');
+		return consultarAssocBeta($sql,$conexion);
 	}	
 	/**
 	 * @param  [type]
